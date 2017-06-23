@@ -7,6 +7,7 @@ from tqdm import tqdm
 
 from xnet import XNet
 import config
+from logging_utils import Logger
 
 
 BATCH_SIZE = 16
@@ -43,19 +44,20 @@ def evaluate(xnet, loader):
     recall = num_tp / (num_tp + num_fn)
     f1 = 2 * precision * recall / (precision + recall)
 
-    tqdm.write('n = {} | acc = {} | precision = {} | recall = {}'.format(
+    logger.log_print('n = {} | acc = {:.3f} | precision = {:.3f} | recall = {:.3f} | F1 = {:.3f}'.format(
         num_samples,
         acc,
         precision,
-        recall
+        recall,
+        f1
     ))
-    return (acc, precision, recall)
+    return (acc, precision, recall, f1)
 
 def train(xnet, loader_train, loader_test, num_epochs=25, print_every=10):
-    print('Training')
+    logger.log_print('Training')
 
     for epoch in range(num_epochs):
-        tqdm.write('Starting epoch {} / {}'.format(epoch + 1, num_epochs))
+        logger.log_print('Starting epoch {} / {}'.format(epoch + 1, num_epochs))
 
         xnet.train()
 
@@ -66,21 +68,25 @@ def train(xnet, loader_train, loader_test, num_epochs=25, print_every=10):
             loss = xnet.train_step(X_var, y_var)
 
             if i % print_every == 0:
-                tqdm.write('i = {}, loss = {:.4}'.format(i + 1, loss.data[0]))
+                logger.log_print('i = {}, loss = {:.4}'.format(i + 1, loss.data[0]))
 
-        print('Evaluating on training set')
+        logger.log_print('Evaluating on training set')
         evaluate(xnet, loader_train)
-        print('Evaluating on test set')
+        logger.log_print('Evaluating on test set')
         evaluate(xnet, loader_test)
 
 if __name__ == '__main__':
+    logger = Logger('log.txt')
+
     with open(config.PROCESSED_PATH, 'rb') as f:
         X_train, y_train, X_test, y_test = pickle.load(f)
 
     loader_train = get_data_loader(X_train, y_train)
     loader_test = get_data_loader(X_test, y_test)
 
-    print('Data loaders ready')
+    logger.log_print('Data loaders ready')
 
     xnet = XNet().cuda()
     train(xnet, loader_train, loader_test)
+
+    logger.close()
