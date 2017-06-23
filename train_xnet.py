@@ -19,6 +19,23 @@ def get_data_loader(X, y):
         num_workers=1
     )
 
+def check_accuracy(xnet, loader):
+    num_correct = 0
+    num_samples = 0
+    xnet.eval()
+
+    for X, y in loader:
+        X_var = Variable(X.cuda(), volatile=True)
+
+        scores = xnet(X_var)
+        preds = scores.data.cpu().numpy().flatten() > 0.5
+        num_correct += (preds == y.numpy()).sum()
+        num_samples += len(preds)
+
+    acc = num_correct / num_samples
+    tqdm.write('Got %d / %d correct (%.2f)' % (num_correct, num_samples, 100 * acc))
+    return acc
+
 def train(xnet, loader_train, loader_test, num_epochs=25, print_every=10):
     print('Training')
 
@@ -35,6 +52,9 @@ def train(xnet, loader_train, loader_test, num_epochs=25, print_every=10):
 
             if i % print_every == 0:
                 tqdm.write('i = {}, loss = {:.4}'.format(i + 1, loss.data[0]))
+
+        check_accuracy(xnet, loader_train)
+        check_accuracy(xnet, loader_test)
 
 if __name__ == '__main__':
     with open(config.PROCESSED_PATH, 'rb') as f:
