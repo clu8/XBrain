@@ -1,1 +1,4 @@
 synapseclient
+pydicom
+Pillow
+numpy
