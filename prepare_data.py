@@ -1,11 +1,15 @@
 import os
 import pickle
 
+import torch
+from torchvision import transforms
 from PIL import Image
 import numpy as np
 
 import config
 
+
+IMG_SIZE = 1024
 
 def is_img_file(filename):
     return os.path.isfile(os.path.join(path, filename)) and os.path.splitext(filename)[1] == '.png'
@@ -20,6 +24,12 @@ def get_label(filename):
     else:
         raise ValueError('Invalid filename label format')
 
+preprocess = transforms.Compose([
+    transforms.Scale(IMG_SIZE, interpolation=Image.ANTIALIAS),
+    transforms.CenterCrop(IMG_SIZE),
+    transforms.ToTensor()
+])
+
 X_train = []
 y_train = []
 X_test = []
@@ -31,8 +41,11 @@ for path in (config.SHENZHEN_PATH, config.MONTGOMERY_PATH):
     for i, f in enumerate(img_files):
         print(f)
         with Image.open(f) as img:
-            X = np.array(img.getdata())
+            img = img.convert('L')
+
+            X = preprocess(img)
             y = get_label(f)
+
             if i % 10 == 0:
                 X_test.append(X)
                 y_test.append(y)
@@ -40,8 +53,15 @@ for path in (config.SHENZHEN_PATH, config.MONTGOMERY_PATH):
                 X_train.append(X)
                 y_train.append(y)
 
-print('Num train: {}'.format(len(X_train)))
-print('Num test: {}'.format(len(X_test)))
+X_train = torch.stack(X_train)
+y_train = torch.FloatTensor(y_train)
+X_test = torch.stack(X_test)
+y_test = torch.FloatTensor(y_test)
+
+print(X_train.size())
+print(y_train.size())
+print(X_test.size())
+print(y_test.size())
 
 with open(config.PROCESSED_PATH, 'wb') as f:
     pickle.dump((X_train, y_train, X_test, y_test), f, protocol=pickle.HIGHEST_PROTOCOL)
