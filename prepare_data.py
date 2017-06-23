@@ -65,3 +65,6 @@ print(y_test.size())
 
 with open(config.PROCESSED_PATH, 'wb') as f:
     pickle.dump((X_train, y_train, X_test, y_test), f, protocol=pickle.HIGHEST_PROTOCOL)
+
+with open(config.SMALL_PATH, 'wb') as f:
+    pickle.dump((X_train[:10], y_train[:10], X_test[:2], y_test[:2]), f, protocol=pickle.HIGHEST_PROTOCOL)
