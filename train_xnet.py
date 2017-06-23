@@ -38,9 +38,11 @@ def evaluate(xnet, loader):
         num_fp += ((preds != answers) & (answers == 0)).sum()
         num_fn += ((preds != answers) & (answers == 1)).sum()
 
-    acc = (num_tp + num_fp) / num_samples
+    acc = (num_tp + num_tn) / num_samples
     precision = num_tp / (num_tp + num_fp)
     recall = num_tp / (num_tp + num_fn)
+    f1 = 2 * precision * recall / (precision + recall)
+
     tqdm.write('n = {} | acc = {} | precision = {} | recall = {}'.format(
         num_samples,
         acc,
@@ -66,7 +68,9 @@ def train(xnet, loader_train, loader_test, num_epochs=25, print_every=10):
             if i % print_every == 0:
                 tqdm.write('i = {}, loss = {:.4}'.format(i + 1, loss.data[0]))
 
+        print('Evaluating on training set')
         evaluate(xnet, loader_train)
+        print('Evaluating on test set')
         evaluate(xnet, loader_test)
 
 if __name__ == '__main__':
