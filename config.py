@@ -1,2 +1,9 @@
+import os
+
+
 DATA_PATH = '../datasets'
-DATA_FOLDER = 'pilot_images'
+
+SHENZHEN_PATH = os.path.join(DATA_PATH, 'ChinaSet_AllFiles', 'CXR_png')
+MONTGOMERY_PATH = os.path.join(DATA_PATH, 'MontgomerySet', 'CXR_png')
+
+PROCESSED_PATH = os.path.join(DATA_PATH, 'processed.pickle')
