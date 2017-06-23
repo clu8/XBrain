@@ -19,9 +19,10 @@ def get_data_loader(X, y):
         num_workers=1
     )
 
-def check_accuracy(xnet, loader):
-    num_correct = 0
+def evaluate(xnet, loader):
     num_samples = 0
+    num_tp, num_tn, num_fp, num_fn = 0, 0, 0, 0
+
     xnet.eval()
 
     for X, y in loader:
@@ -29,12 +30,24 @@ def check_accuracy(xnet, loader):
 
         scores = xnet(X_var)
         preds = scores.data.cpu().numpy().flatten() > 0.5
-        num_correct += (preds == y.numpy()).sum()
-        num_samples += len(preds)
+        answers = y.numpy()
 
-    acc = num_correct / num_samples
-    tqdm.write('Got %d / %d correct (%.2f)' % (num_correct, num_samples, 100 * acc))
-    return acc
+        num_samples += len(preds)
+        num_tp += ((preds == answers) & (answers == 1)).sum()
+        num_tn += ((preds == answers) & (answers == 0)).sum()
+        num_fp += ((preds != answers) & (answers == 0)).sum()
+        num_fn += ((preds != answers) & (answers == 1)).sum()
+
+    acc = (num_tp + num_fp) / num_samples
+    precision = num_tp / (num_tp + num_fp)
+    recall = num_tp / (num_tp + num_fn)
+    tqdm.write('n = {} | acc = {} | precision = {} | recall = {}'.format(
+        num_samples,
+        acc,
+        precision,
+        recall
+    ))
+    return (acc, precision, recall)
 
 def train(xnet, loader_train, loader_test, num_epochs=25, print_every=10):
     print('Training')
@@ -53,8 +66,8 @@ def train(xnet, loader_train, loader_test, num_epochs=25, print_every=10):
             if i % print_every == 0:
                 tqdm.write('i = {}, loss = {:.4}'.format(i + 1, loss.data[0]))
 
-        check_accuracy(xnet, loader_train)
-        check_accuracy(xnet, loader_test)
+        evaluate(xnet, loader_train)
+        evaluate(xnet, loader_test)
 
 if __name__ == '__main__':
     with open(config.PROCESSED_PATH, 'rb') as f:
