@@ -55,6 +55,7 @@ def evaluate(xnet, loader):
 
 def train(xnet, loader_train, loader_test, num_epochs=25, print_every=10):
     logger.log_print('Training')
+    best_test_f1 = 0
 
     for epoch in range(num_epochs):
         logger.log_print('Starting epoch {} / {}'.format(epoch + 1, num_epochs))
@@ -70,10 +71,17 @@ def train(xnet, loader_train, loader_test, num_epochs=25, print_every=10):
             if i % print_every == 0:
                 logger.log_print('i = {}, loss = {:.4}'.format(i + 1, loss.data[0]))
 
-        logger.log_print('Evaluating on training set')
-        evaluate(xnet, loader_train)
+        if epoch % 5 == 4:
+            logger.log_print('Evaluating on training set')
+            evaluate(xnet, loader_train)
+
         logger.log_print('Evaluating on test set')
-        evaluate(xnet, loader_test)
+        acc, precision, recall, f1 = evaluate(xnet, loader_test)
+
+        if f1 > best_test_f1:
+            logger.log_print('Saving new best model')
+            best_test_f1 = f1
+            torch.save(xnet.state_dict(), config.MODEL_PATH)
 
 if __name__ == '__main__':
     logger = Logger('log.txt')
