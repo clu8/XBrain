@@ -26,6 +26,8 @@ class XVisor(object):
         score = float(score_var.data.cpu().numpy().flatten()[0])
 
         img_crop = X.squeeze().unsqueeze(-1).repeat(1, 1, 3).numpy()
+        Image.fromarray(np.uint8(img_crop * 256)).save('original.jpg')
+        
         img_crop *= 128
 
         score_var.backward()

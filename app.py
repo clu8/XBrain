@@ -1,6 +1,6 @@
 from io import BytesIO
 
-from flask import Flask, request, Response, jsonify
+from flask import Flask, request, Response, jsonify, send_file
 import requests
 from PIL import Image
 
@@ -41,14 +41,22 @@ def scan():
 
     data = {
         'score': score,
-        'original': 'http://www.pemcincinnati.com/blog/wp-content/uploads/2013/02/Case-2.png',
-        'heatmap': 'http://www.pemcincinnati.com/blog/wp-content/uploads/2013/02/Case-2.png'
+        'original': 'http://104.196.225.45:5000/original.jpg',
+        'heatmap': 'http://104.196.225.45:5000/heatmap.jpg'
     }
     resp = jsonify(data)
     resp.status_code = 200
     resp.headers['Access-Control-Allow-Origin'] = '*'
 
     return resp
+
+@app.route('/original.jpg')
+def get_original_img():
+    return send_file('original.jpg')
+
+@app.route('/heatmap.jpg')
+def get_heatmap_img():
+    return send_file('heatmap.jpg')
 
 def img_from_url(url):
     response = requests.get(url)
