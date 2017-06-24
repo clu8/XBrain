@@ -3,12 +3,8 @@ from io import BytesIO
 from flask import Flask, request, Response, jsonify
 import requests
 from PIL import Image
-import torch
-from torch.autograd import Variable
 
-from xnet import XNet
-import config
-from vision_utils import preprocess
+from xvisor import XVisor
 
 
 app = Flask(__name__)
@@ -29,9 +25,18 @@ def scan():
     print('Scan called with URL: {}'.format(img_url))
 
     if img_url is None:
-        return Response(status=400)
+        err = 'No URL provided'
+        print(err)
+        return Response(response=err, status=400)
 
-    score = float(get_preds(img_from_url(img_url))[0])
+    try:
+        img = img_from_url(img_url)
+    except:
+        err = 'Image load error'
+        print(err)
+        return Response(response=err, status=400)
+
+    score = xvisor.get_preds(img)
     print(score)
 
     data = {
@@ -39,6 +44,7 @@ def scan():
     }
     resp = jsonify(data)
     resp.status_code = 200
+    resp.headers['Access-Control-Allow-Origin'] = '*'
 
     return resp
 
@@ -48,17 +54,7 @@ def img_from_url(url):
     img = img.convert('L')
     return img
 
-def get_preds(img):
-    X = preprocess(img)
-    X = X.unsqueeze(0)
-    X_var = Variable(X.cuda(), volatile=True)
-    score_var = xnet(X_var)
-    score = score_var.data.cpu().numpy().flatten()
-    return score
-
-xnet = XNet().cuda()
-xnet.eval()
-xnet.load_state_dict(torch.load(config.MODEL_PATH))
+xvisor = XVisor()
 
 if __name__ == '__main__':
     app.run(host= '0.0.0.0', port=5000, debug=True)
