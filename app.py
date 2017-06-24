@@ -1,6 +1,6 @@
 from io import BytesIO
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, Response, jsonify
 import requests
 from PIL import Image
 import torch
@@ -25,9 +25,12 @@ def test():
 
 @app.route('/scan', methods=['GET'])
 def scan():
-    print(request.args)
     img_url = request.args.get('url')
     print('Scan called with URL: {}'.format(img_url))
+
+    if img_url is None:
+        return Response(status=400)
+
     score = float(get_preds(img_from_url(img_url))[0])
     print(score)
 
