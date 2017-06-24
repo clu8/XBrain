@@ -40,7 +40,9 @@ def scan():
     print(score)
 
     data = {
-        'score': score
+        'score': score,
+        'original': 'http://www.pemcincinnati.com/blog/wp-content/uploads/2013/02/Case-2.png',
+        'heatmap': 'http://www.pemcincinnati.com/blog/wp-content/uploads/2013/02/Case-2.png'
     }
     resp = jsonify(data)
     resp.status_code = 200
