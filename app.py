@@ -1,6 +1,6 @@
 from io import BytesIO
 
-from flask import Flask
+from flask import Flask, request, jsonify
 import requests
 from PIL import Image
 import torch
@@ -15,11 +15,29 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return 'Welcome to XBrain'
+    print('here')
+    return 'Welcome to XVisor'
 
-@app.route('/scan', methods=['POST'])
+@app.route('/test')
+def test():
+    print('test')
+    return 'testing'
+
+@app.route('/scan', methods=['GET'])
 def scan():
-    pass
+    print(request.args)
+    img_url = request.args.get('url')
+    print('Scan called with URL: {}'.format(img_url))
+    score = float(get_preds(img_from_url(img_url))[0])
+    print(score)
+
+    data = {
+        'score': score
+    }
+    resp = jsonify(data)
+    resp.status_code = 200
+
+    return resp
 
 def img_from_url(url):
     response = requests.get(url)
@@ -31,9 +49,13 @@ def get_preds(img):
     X = preprocess(img)
     X = X.unsqueeze(0)
     X_var = Variable(X.cuda(), volatile=True)
-    score = xnet(X_var)
-    print(score)
+    score_var = xnet(X_var)
+    score = score_var.data.cpu().numpy().flatten()
+    return score
 
 xnet = XNet().cuda()
 xnet.eval()
 xnet.load_state_dict(torch.load(config.MODEL_PATH))
+
+if __name__ == '__main__':
+    app.run(host= '0.0.0.0', port=5000, debug=True)
