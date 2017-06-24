@@ -1,2 +1,2 @@
-# XBrain
+# XVisor
 Deep learning for radiology
