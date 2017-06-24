@@ -2,14 +2,12 @@ import os
 import pickle
 
 import torch
-from torchvision import transforms
 from PIL import Image
 import numpy as np
 
 import config
+from vision_utils import preprocess
 
-
-IMG_SIZE = 1024
 
 def is_img_file(filename):
     return os.path.isfile(os.path.join(path, filename)) and os.path.splitext(filename)[1] == '.png'
@@ -23,12 +21,6 @@ def get_label(filename):
         return 0
     else:
         raise ValueError('Invalid filename label format')
-
-preprocess = transforms.Compose([
-    transforms.Scale(IMG_SIZE, interpolation=Image.ANTIALIAS),
-    transforms.CenterCrop(IMG_SIZE),
-    transforms.ToTensor()
-])
 
 X_train = []
 y_train = []
