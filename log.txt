@@ -1,0 +1,214 @@
+Data loaders ready
+Training
+Starting epoch 1 / 25
+i = 1, loss = 1.177
+i = 11, loss = 1.013
+i = 21, loss = 1.005
+i = 31, loss = 1.931
+i = 41, loss = 2.115
+Evaluating on test set
+n = 81 | acc = 0.481 | precision = nan | recall = 0.000 | F1 = nan
+Starting epoch 2 / 25
+i = 1, loss = 1.23
+i = 11, loss = 0.6546
+i = 21, loss = 1.057
+i = 31, loss = 1.175
+i = 41, loss = 0.852
+Evaluating on test set
+n = 81 | acc = 0.691 | precision = 0.635 | recall = 0.952 | F1 = 0.762
+Starting epoch 3 / 25
+i = 1, loss = 0.2856
+i = 11, loss = 1.189
+i = 21, loss = 0.5259
+i = 31, loss = 0.3188
+i = 41, loss = 1.187
+Evaluating on test set
+n = 81 | acc = 0.864 | precision = 0.860 | recall = 0.881 | F1 = 0.871
+Starting epoch 4 / 25
+i = 1, loss = 0.6842
+i = 11, loss = 1.348
+i = 21, loss = 0.6268
+i = 31, loss = 0.4431
+i = 41, loss = 0.9158
+Evaluating on test set
+n = 81 | acc = 0.765 | precision = 0.767 | recall = 0.786 | F1 = 0.776
+Starting epoch 5 / 25
+i = 1, loss = 0.4507
+i = 11, loss = 0.8394
+i = 21, loss = 0.4484
+i = 31, loss = 0.1842
+i = 41, loss = 2.032
+Evaluating on training set
+n = 719 | acc = 0.605 | precision = 1.000 | recall = 0.193 | F1 = 0.324
+Evaluating on test set
+n = 81 | acc = 0.556 | precision = 1.000 | recall = 0.143 | F1 = 0.250
+Starting epoch 6 / 25
+i = 1, loss = 1.22
+i = 11, loss = 1.098
+i = 21, loss = 0.3321
+i = 31, loss = 0.3291
+i = 41, loss = 1.29
+Evaluating on test set
+n = 81 | acc = 0.840 | precision = 0.822 | recall = 0.881 | F1 = 0.851
+Starting epoch 7 / 25
+i = 1, loss = 0.7482
+i = 11, loss = 0.9886
+i = 21, loss = 0.3113
+i = 31, loss = 0.2491
+i = 41, loss = 0.3041
+Evaluating on test set
+n = 81 | acc = 0.753 | precision = 0.775 | recall = 0.738 | F1 = 0.756
+Starting epoch 8 / 25
+i = 1, loss = 0.08545
+i = 11, loss = 0.2047
+i = 21, loss = 0.07083
+i = 31, loss = 0.1802
+i = 41, loss = 0.6247
+Evaluating on test set
+n = 81 | acc = 0.543 | precision = 0.532 | recall = 1.000 | F1 = 0.694
+Saving new best model
+Starting epoch 9 / 25
+i = 1, loss = 0.1044
+i = 11, loss = 0.2529
+i = 21, loss = 0.5647
+i = 31, loss = 0.647
+i = 41, loss = 0.1397
+Evaluating on test set
+n = 81 | acc = 0.827 | precision = 0.938 | recall = 0.714 | F1 = 0.811
+Starting epoch 10 / 25
+i = 1, loss = 0.2079
+i = 11, loss = 0.01813
+i = 21, loss = 0.1937
+i = 31, loss = 0.1829
+i = 41, loss = 0.477
+Evaluating on training set
+n = 719 | acc = 0.951 | precision = 0.932 | recall = 0.972 | F1 = 0.951
+Evaluating on test set
+n = 81 | acc = 0.802 | precision = 0.810 | recall = 0.810 | F1 = 0.810
+Starting epoch 11 / 25
+i = 1, loss = 0.1713
+i = 11, loss = 0.1941
+i = 21, loss = 0.1779
+i = 31, loss = 0.07162
+i = 41, loss = 0.8207
+Evaluating on test set
+n = 81 | acc = 0.691 | precision = 0.631 | recall = 0.976 | F1 = 0.766
+Saving new best model
+Starting epoch 12 / 25
+i = 1, loss = 0.07766
+i = 11, loss = 0.06645
+i = 21, loss = 0.1371
+i = 31, loss = 0.2683
+i = 41, loss = 0.0778
+Evaluating on test set
+n = 81 | acc = 0.679 | precision = 0.900 | recall = 0.429 | F1 = 0.581
+Starting epoch 13 / 25
+i = 1, loss = 0.1254
+i = 11, loss = 0.02564
+i = 21, loss = 0.07545
+i = 31, loss = 0.03461
+i = 41, loss = 0.1476
+Evaluating on test set
+n = 81 | acc = 0.728 | precision = 0.679 | recall = 0.905 | F1 = 0.776
+Starting epoch 14 / 25
+i = 1, loss = 0.04935
+i = 11, loss = 0.01467
+i = 21, loss = 0.09371
+i = 31, loss = 0.1325
+i = 41, loss = 0.3944
+Evaluating on test set
+n = 81 | acc = 0.840 | precision = 0.854 | recall = 0.833 | F1 = 0.843
+Starting epoch 15 / 25
+i = 1, loss = 0.03079
+i = 11, loss = 0.04605
+i = 21, loss = 0.007169
+i = 31, loss = 0.01636
+i = 41, loss = 0.1438
+Evaluating on training set
+n = 719 | acc = 0.976 | precision = 0.954 | recall = 1.000 | F1 = 0.976
+Evaluating on test set
+n = 81 | acc = 0.802 | precision = 0.771 | recall = 0.881 | F1 = 0.822
+Starting epoch 16 / 25
+i = 1, loss = 0.06563
+i = 11, loss = 0.1076
+i = 21, loss = 0.002314
+i = 31, loss = 0.1814
+i = 41, loss = 0.1923
+Evaluating on test set
+n = 81 | acc = 0.790 | precision = 0.745 | recall = 0.905 | F1 = 0.817
+Starting epoch 17 / 25
+i = 1, loss = 0.03378
+i = 11, loss = 0.1443
+i = 21, loss = 0.03924
+i = 31, loss = 0.02307
+i = 41, loss = 0.01198
+Evaluating on test set
+n = 81 | acc = 0.840 | precision = 0.822 | recall = 0.881 | F1 = 0.851
+Starting epoch 18 / 25
+i = 1, loss = 0.03349
+i = 11, loss = 0.0163
+i = 21, loss = 0.01513
+i = 31, loss = 0.01205
+i = 41, loss = 0.003409
+Evaluating on test set
+n = 81 | acc = 0.852 | precision = 0.841 | recall = 0.881 | F1 = 0.860
+Starting epoch 19 / 25
+i = 1, loss = 0.007393
+i = 11, loss = 0.004599
+i = 21, loss = 0.004712
+i = 31, loss = 0.004856
+i = 41, loss = 0.002521
+Evaluating on test set
+n = 81 | acc = 0.877 | precision = 0.900 | recall = 0.857 | F1 = 0.878
+Starting epoch 20 / 25
+i = 1, loss = 0.009415
+i = 11, loss = 0.003287
+i = 21, loss = 0.004133
+i = 31, loss = 0.004505
+i = 41, loss = 0.02124
+Evaluating on training set
+n = 719 | acc = 1.000 | precision = 1.000 | recall = 1.000 | F1 = 1.000
+Evaluating on test set
+n = 81 | acc = 0.864 | precision = 0.844 | recall = 0.905 | F1 = 0.874
+Starting epoch 21 / 25
+i = 1, loss = 0.002551
+i = 11, loss = 0.001129
+i = 21, loss = 0.0009686
+i = 31, loss = 0.003299
+i = 41, loss = 0.001231
+Evaluating on test set
+n = 81 | acc = 0.852 | precision = 0.841 | recall = 0.881 | F1 = 0.860
+Starting epoch 22 / 25
+i = 1, loss = 0.005552
+i = 11, loss = 0.0006224
+i = 21, loss = 0.003622
+i = 31, loss = 0.003384
+i = 41, loss = 0.002236
+Evaluating on test set
+n = 81 | acc = 0.852 | precision = 0.841 | recall = 0.881 | F1 = 0.860
+Starting epoch 23 / 25
+i = 1, loss = 0.0009084
+i = 11, loss = 0.002234
+i = 21, loss = 0.0007886
+i = 31, loss = 0.0004542
+i = 41, loss = 0.001417
+Evaluating on test set
+n = 81 | acc = 0.852 | precision = 0.841 | recall = 0.881 | F1 = 0.860
+Starting epoch 24 / 25
+i = 1, loss = 0.001425
+i = 11, loss = 0.0003235
+i = 21, loss = 0.001502
+i = 31, loss = 0.00236
+i = 41, loss = 0.001362
+Evaluating on test set
+n = 81 | acc = 0.852 | precision = 0.841 | recall = 0.881 | F1 = 0.860
+Starting epoch 25 / 25
+i = 1, loss = 0.001977
+i = 11, loss = 0.001727
+i = 21, loss = 0.0007964
+i = 31, loss = 0.000895
+i = 41, loss = 0.0008376
+Evaluating on training set
+n = 719 | acc = 1.000 | precision = 1.000 | recall = 1.000 | F1 = 1.000
+Evaluating on test set
+n = 81 | acc = 0.852 | precision = 0.841 | recall = 0.881 | F1 = 0.860

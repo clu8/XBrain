@@ -37,7 +37,9 @@ class XNet(nn.Module):
 
     def train_step(self, X, y):
         preds = self(X)
-        loss = self.loss_fn(preds, y)
+        weights = y.data + 1 # weight positives 2:1
+        loss_fn = nn.BCELoss(weight=weights)
+        loss = loss_fn(preds, y)
 
         self.optimizer.zero_grad()
         loss.backward()

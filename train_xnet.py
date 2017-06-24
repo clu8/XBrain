@@ -53,9 +53,9 @@ def evaluate(xnet, loader):
     ))
     return (acc, precision, recall, f1)
 
-def train(xnet, loader_train, loader_test, num_epochs=25, print_every=10):
+def train(xnet, loader_train, loader_test, num_epochs=25, print_every=10, save_model=True):
     logger.log_print('Training')
-    best_test_f1 = 0
+    best_test_precision = 0
 
     for epoch in range(num_epochs):
         logger.log_print('Starting epoch {} / {}'.format(epoch + 1, num_epochs))
@@ -78,9 +78,9 @@ def train(xnet, loader_train, loader_test, num_epochs=25, print_every=10):
         logger.log_print('Evaluating on test set')
         acc, precision, recall, f1 = evaluate(xnet, loader_test)
 
-        if f1 > best_test_f1:
+        if precision > best_test_precision and recall > 0.97 and save_model:
             logger.log_print('Saving new best model')
-            best_test_f1 = f1
+            best_test_precision = precision
             torch.save(xnet.state_dict(), config.MODEL_PATH)
 
 if __name__ == '__main__':
