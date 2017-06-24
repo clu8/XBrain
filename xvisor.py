@@ -25,13 +25,18 @@ class XVisor(object):
         score_var = self.xnet(X_var)
         score = float(score_var.data.cpu().numpy().flatten()[0])
 
+        img_crop = X.squeeze().unsqueeze(-1).repeat(1, 1, 3).numpy()
+        img_crop *= 128
+
         score_var.backward()
         img_grad = X_var.grad.data.squeeze().cpu().numpy()
 
         x, y = img_grad.shape
-        heatmap = np.zeros([x, y, 3])
-        heatmap[:, :, 0] = abs(img_grad) ** 0.5
-        heatmap[:, :, 0] *= 512 / heatmap.max()
+        overlay = np.zeros([x, y, 3])
+        overlay[:, :, 0] = abs(img_grad) ** 0.5
+        overlay[:, :, 0] *= 256 / overlay.max()
+
+        heatmap = overlay + img_crop
         heatmap = np.uint8(heatmap)
 
         heatmap_img = Image.fromarray(heatmap)
