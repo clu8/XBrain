@@ -53,6 +53,7 @@ def scan():
 
 @app.route('/img/<path:filename>')
 def get_img(filename):
+    print('Getting image: {}'.format(filename))
     return send_from_directory(config.IMG_PATH, filename)
 
 def img_from_url(url):
@@ -64,4 +65,4 @@ def img_from_url(url):
 xvisor = XVisor()
 
 if __name__ == '__main__':
-    app.run(host= '0.0.0.0', port=5000, debug=True)
+    app.run(host= '0.0.0.0', port=5000, debug=True, threaded=True)
