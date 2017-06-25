@@ -10,3 +10,5 @@ PROCESSED_PATH = os.path.join(DATA_PATH, 'processed.pickle')
 SMALL_PATH = os.path.join(DATA_PATH, 'processed_small.pickle')
 
 MODEL_PATH = os.path.join(DATA_PATH, 'xnet_params.pytmodel')
+
+IMG_PATH = 'img'

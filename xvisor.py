@@ -1,3 +1,6 @@
+import os
+import random
+
 import torch
 from torch.autograd import Variable
 from PIL import Image
@@ -18,6 +21,10 @@ class XVisor(object):
         '''
         img: 1 x 1024 x 1024 FloatTensor
         '''
+        req_id = random.randint(100000, 999999)
+        original_path = os.path.join(config.IMG_PATH, 'original{}.jpg'.format(req_id))
+        heatmap_path = os.path.join(config.IMG_PATH, 'heatmap{}.jpg'.format(req_id))
+
         X = preprocess(img)
         X = X.unsqueeze(0)
         X_var = Variable(X.cuda(), requires_grad=True)
@@ -26,7 +33,7 @@ class XVisor(object):
         score = float(score_var.data.cpu().numpy().flatten()[0])
 
         img_crop = X.squeeze().unsqueeze(-1).repeat(1, 1, 3).numpy()
-        Image.fromarray(np.uint8(img_crop * 256)).save('original.jpg')
+        Image.fromarray(np.uint8(img_crop * 256)).save(original_path)
         
         img_crop *= 128
 
@@ -42,6 +49,6 @@ class XVisor(object):
         heatmap = np.uint8(heatmap)
 
         heatmap_img = Image.fromarray(heatmap)
-        heatmap_img.save('heatmap.jpg')
+        heatmap_img.save(heatmap_path)
 
-        return score
+        return score, original_path, heatmap_path

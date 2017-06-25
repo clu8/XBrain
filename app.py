@@ -1,10 +1,11 @@
 from io import BytesIO
 
-from flask import Flask, request, Response, jsonify, send_file
+from flask import Flask, request, Response, jsonify, send_from_directory
 import requests
 from PIL import Image
 
 from xvisor import XVisor
+import config
 
 
 app = Flask(__name__)
@@ -36,13 +37,13 @@ def scan():
         print(err)
         return Response(response=err, status=400)
 
-    score = xvisor.get_preds(img)
-    print(score)
+    score, original_path, heatmap_path = xvisor.get_preds(img)
+    print(score, original_path, heatmap_path)
 
     data = {
         'score': score,
-        'original': 'http://104.196.225.45:5000/original.jpg',
-        'heatmap': 'http://104.196.225.45:5000/heatmap.jpg'
+        'original': 'http://104.196.225.45:5000/{}'.format(original_path),
+        'heatmap': 'http://104.196.225.45:5000/{}'.format(heatmap_path)
     }
     resp = jsonify(data)
     resp.status_code = 200
@@ -50,13 +51,9 @@ def scan():
 
     return resp
 
-@app.route('/original.jpg')
-def get_original_img():
-    return send_file('original.jpg')
-
-@app.route('/heatmap.jpg')
-def get_heatmap_img():
-    return send_file('heatmap.jpg')
+@app.route('/img/<path:filename>')
+def get_img(filename):
+    return send_from_directory(config.IMG_PATH, filename)
 
 def img_from_url(url):
     response = requests.get(url)
